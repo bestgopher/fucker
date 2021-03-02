@@ -34,7 +34,7 @@ func (s *sort) generate() [][]int {
 	var l = rand.Intn(50) + 50
 	var result = make([][]int, 0, l)
 	for i := 0; i < l; i++ {
-		length := rand.Intn(100)
+		length := rand.Intn(100) + 50
 		s := make([]int, 0, length)
 		for j := 0; j < length; j++ {
 			s = append(s, rand.Intn(10000))
