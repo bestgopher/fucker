@@ -4,13 +4,10 @@ import (
 	"math/rand"
 	"testing"
 	"time"
-
-	"github.com/stretchr/testify/assert"
 )
 
 type sort struct {
 	handler func([]int)
-	t       *testing.T
 }
 
 func newSort(handler func([]int)) *sort {
@@ -76,8 +73,10 @@ func TestSort(t *testing.T) {
 
 	for name, f := range functions {
 		s := newSort(f)
-		if assert.Equalf(t, s.test(), true, "%s failed", name) {
+		if s.test() {
 			t.Logf("%s success", name)
+		} else {
+			t.Fatalf("%s failed", name)
 		}
 	}
 }
