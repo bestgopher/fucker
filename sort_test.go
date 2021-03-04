@@ -42,6 +42,9 @@ func (s *sort) generate() [][]int {
 		result = append(result, s)
 	}
 
+	// 添加三个特殊情况
+	result = append(result, []int{}, nil, []int{1})
+
 	return result
 }
 
