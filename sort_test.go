@@ -13,19 +13,21 @@ type sort struct {
 	t       *testing.T
 }
 
-func newSort(handler func([]int), t *testing.T) *sort {
-	return &sort{handler: handler, t: t}
+func newSort(handler func([]int)) *sort {
+	return &sort{handler: handler}
 }
 
-func (s *sort) test() {
+func (s *sort) test() bool {
 	data := s.generate()
 
 	for _, v := range data {
-		s.t.Logf("排序前： %v\n", v)
 		s.handler(v)
-		s.t.Logf("排序后： %v\n", v)
-		assert.Equal(s.t, s.check(v), true)
+		if !s.check(v) {
+			return false
+		}
 	}
+
+	return true
 }
 
 // 随机生成乱序的一些切片
@@ -62,4 +64,20 @@ func (s *sort) check(data []int) bool {
 	}
 
 	return true
+}
+
+func TestSort(t *testing.T) {
+	funcs := map[string]func([]int){
+		"Selection Sort": SelectionSort,
+		"Merge Sort":     MergeSort,
+		"Quick Sort":     QuickSort,
+		"Bubble Sort":    BubbleSort,
+	}
+
+	for name, f := range funcs {
+		s := newSort(f)
+		if assert.Equalf(t, s.test(), true, "%s failed", name) {
+			t.Logf("%s success", name)
+		}
+	}
 }
