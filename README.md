@@ -3,7 +3,8 @@ golang实现的常见排序算法demo
 
 | 算法                                                         | 时间复杂度 | 空间复杂度 | 稳定性 |
 | ------------------------------------------------------------ | ---------- | ---------- | ------ |
-| [bubble](https://github.com/bestgopher/sort/blob/master/bubble.go) | O( n^2 )   | O(1)       | yes    |
+| [Bubble](https://github.com/bestgopher/sort/blob/master/bubble.go) | O( n^2 )   | O(1)       | yes    |
+| [Selection](https://github.com/bestgopher/sort/blob/master/selection.go) | O( n^2 )   | O(1)       | no     |
 
 ---
 
