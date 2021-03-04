@@ -67,14 +67,14 @@ func (s *sort) check(data []int) bool {
 }
 
 func TestSort(t *testing.T) {
-	funcs := map[string]func([]int){
+	functions := map[string]func([]int){
 		"Selection Sort": SelectionSort,
 		"Merge Sort":     MergeSort,
 		"Quick Sort":     QuickSort,
 		"Bubble Sort":    BubbleSort,
 	}
 
-	for name, f := range funcs {
+	for name, f := range functions {
 		s := newSort(f)
 		if assert.Equalf(t, s.test(), true, "%s failed", name) {
 			t.Logf("%s success", name)
