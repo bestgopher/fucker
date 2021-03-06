@@ -70,6 +70,7 @@ func TestSort(t *testing.T) {
 		"Quick Sort":     QuickSort,
 		"Bubble Sort":    BubbleSort,
 		"Heap Sort":      HeapSort,
+		"Insertion Sort": InsertionSort,
 	}
 
 	for name, f := range functions {
