@@ -6,7 +6,7 @@ golang实现的常见排序算法demo
 | [Bubble](https://github.com/bestgopher/sort/blob/master/bubble.go) | O( n^2 )   | O(1)       | yes    |
 | [Selection](https://github.com/bestgopher/sort/blob/master/selection.go) | O( n^2 )   | O(1)       | no     |
 | [Heap](https://github.com/bestgopher/sort/blob/master/heap.go) | O(nlogn)   | O(1)       | no     |
-| [Insertion](https://github.com/bestgopher/sort/blob/master/Insertion.go) | O(n^2)     | O(1)       | yes    |
+| [Insertion](https://github.com/bestgopher/sort/blob/master/insertion.go) | O(n^2)     | O(1)       | yes    |
 
 ---
 
