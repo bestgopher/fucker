@@ -7,6 +7,7 @@ golang实现的常见排序算法demo
 | [Selection](https://github.com/bestgopher/sort/blob/master/selection.go) | O( n^2 )   | O(1)       | no     |
 | [Heap](https://github.com/bestgopher/sort/blob/master/heap.go) | O(nlogn)   | O(1)       | no     |
 | [Insertion](https://github.com/bestgopher/sort/blob/master/insertion.go) | O(n^2)     | O(1)       | yes    |
+| [Merge](https://github.com/bestgopher/sort/blob/master/merge.go) |            |            |        |
 
 ---
 
