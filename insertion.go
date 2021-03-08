@@ -1,7 +1,5 @@
 package sort
 
-import "fmt"
-
 /*
 插入排序
 	非常类似扑克牌的排序
@@ -20,7 +18,6 @@ import "fmt"
 	返回的位置上的元素要大于待插入元素，且此位置前面的元素小于等于待插入元素
 */
 func InsertionSort(s []int) {
-	fmt.Println(s, "start")
 	for i := 1; i < len(s); i++ {
 
 		if s[i] > s[i-1] {
@@ -37,8 +34,6 @@ func InsertionSort(s []int) {
 				end = middle
 			} else if s[middle] <= s[i] {
 				start = middle + 1
-			} else {
-				fmt.Println((s[middle] > s[i] && s[middle-1] <= s[i]), s[middle], s[middle-1], s[i])
 			}
 		}
 
