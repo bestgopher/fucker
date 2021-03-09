@@ -36,7 +36,7 @@ func MergeSort(s []int) {
 		return
 	}
 
-	mid := n / 2
+	mid := n >> 1
 	s1 := s[0:mid]
 	s2 := s[mid:n]
 	MergeSort(s1)
@@ -48,14 +48,25 @@ func MergeSort(s []int) {
 func merge(s1, s2, s []int) {
 	s3 := make([]int, len(s1))
 	copy(s3, s1) // 这里只需要一个数组的备份
-
+	// i: s3(s1的copy)的索引，j: s2的索引
 	for i, j := 0, 0; i+j < len(s); {
-		if j == len(s2) || (i < len(s3) && s3[i] < s2[j]) {
+		if j == len(s2) || (i < len(s3) && s3[i] <= s2[j]) {
 			s[i+j] = s3[i]
 			i++
 		} else {
 			s[i+j] = s2[j]
 			j++
+		}
+
+		// 优化：当s3(s1的copy)已经遍历完毕后，其实s2可以不用再继续遍历了
+		if len(s3) == i {
+			break
+		}
+
+		// 优化: 当s2遍历完毕后，直接复制s3(s1的copy)剩余部分就完事了
+		if len(s2) == j {
+			copy(s[i+j:], s3[i:])
+			break
 		}
 	}
 }
