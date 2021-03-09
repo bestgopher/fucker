@@ -1,4 +1,4 @@
-package sort
+package internal
 
 /*
 冒泡排序

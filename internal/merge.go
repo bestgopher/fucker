@@ -1,4 +1,4 @@
-package sort
+package internal
 
 // 归并排序
 // 分支法：

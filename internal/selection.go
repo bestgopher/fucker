@@ -1,4 +1,4 @@
-package sort
+package internal
 
 /*
 选择排序

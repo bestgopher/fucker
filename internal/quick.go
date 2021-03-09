@@ -1,4 +1,4 @@
-package sort
+package internal
 
 // 快速排序
 //		基于分治法，但是是把所有的复杂操作在递归调用之前做完。
