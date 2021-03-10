@@ -34,14 +34,16 @@ func heapify(s []int) {
 
 // downHeap是自底向上使得元素冒泡
 func downHeap(s []int, index int) {
-	if index*2+1 < len(s) {
+	for index*2+1 < len(s) {
 		max := index*2 + 1
 		if index*2+2 < len(s) && s[index*2+1] < s[index*2+2] {
 			max = index*2 + 2
 		}
 		if s[max] > s[index] {
 			s[max], s[index] = s[index], s[max]
-			downHeap(s, max)
+			index = max
+		} else {
+			break
 		}
 	}
 }
