@@ -15,7 +15,9 @@ package internal
 //		递归地排序序列L和G
 //	3.合并
 //		把s中的元素按照先插入L中的元素、然后插入E中的元素、最后插入G中的元素的顺序放回。
-func QuickSort(s []int) {
+// 此排序为非原地，有大量的容器创建和删除
+// Deprecated
+func QuickSort1(s []int) {
 	n := len(s)
 	if n < 2 {
 		return
@@ -39,10 +41,56 @@ func QuickSort(s []int) {
 		}
 	}
 
-	QuickSort(L)
-	QuickSort(G)
+	QuickSort1(L)
+	QuickSort1(G)
 
 	copy(s[:len(L)], L)
 	copy(s[len(L):len(L)+len(E)], E)
 	copy(s[len(L)+len(E):len(L)+len(E)+len(G)], G)
+}
+
+// 原地排序的快速排序实现
+// 步骤：
+//		1.指定一个基准值p(p为s[begin]), begin为0，end为len(s)-1
+//		2.首先从后往前遍历，如果遍历的元素大于基准值，则继续往前遍历, end = end-1
+//		3.如果从后往前遍历时的值小于基准值，begin的值赋值为s[end], begin = begin + 1
+//		4.然后从前往后遍历，遍历值小于或者等于基准值时，继续向后遍历，begin = begin + 1
+//		5.当遍历值大于或者等于基准值时，s[end] = s[begin]
+//		6.再次重复2-5步，直到begin == end为止
+//		7.最后s[begin] = p
+//		8.递归快速排序以begin为分界线的两部分序列
+func QuickSort(s []int) {
+	n := len(s)
+	if n < 2 {
+		return
+	}
+
+	// p为基准值
+	p, begin, end := s[0], 0, n-1
+
+	for begin < end {
+		for begin < end {
+			if p < s[end] {
+				end--
+			} else {
+				s[begin] = s[end]
+				begin++
+				break
+			}
+		}
+
+		for begin < end {
+			if p > s[begin] {
+				begin++
+			} else {
+				s[end] = s[begin]
+				end--
+				break
+			}
+		}
+	}
+
+	s[begin] = p
+	QuickSort(s[:begin])
+	QuickSort(s[begin+1:])
 }
