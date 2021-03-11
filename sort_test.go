@@ -7,23 +7,31 @@ import (
 )
 
 type sort struct {
-	handler func([]int)
 }
 
-func newSort(handler func([]int)) *sort {
-	return &sort{handler: handler}
+func newSort() *sort {
+	return &sort{}
 }
 
-func (s *sort) test() bool {
+func (s *sort) sort(f func([]int)) bool {
 	data := s.generate()
-
 	for _, v := range data {
-		s.handler(v)
+		f(v)
 		if !s.check(v) {
 			return false
 		}
 	}
+	return true
+}
 
+func (s *sort) bench(f func([]int)) bool {
+	data := s.generate()
+	for _, v := range data {
+		f(v)
+		if !s.check(v) {
+			return false
+		}
+	}
 	return true
 }
 
@@ -47,6 +55,18 @@ func (s *sort) generate() [][]int {
 	return result
 }
 
+// 复制一份生成的数据
+func (s *sort) cloneData(datas [][]int) [][]int {
+	v := make([][]int, 0, len(datas))
+
+	for _, data := range datas {
+		d := make([]int, len(data))
+		copy(d, data)
+		v = append(v, d)
+	}
+	return v
+}
+
 // 检查切片是否是升序
 // 是升序返回true，否则返回false
 func (s *sort) check(data []int) bool {
@@ -63,24 +83,25 @@ func (s *sort) check(data []int) bool {
 	return true
 }
 
-func TestSort(t *testing.T) {
-	functions := map[string]func([]int){
-		"Selection Sort": SelectionSort,
-		"Merge Sort":     MergeSort,
-		"Quick Sort":     QuickSort,
-		"Bubble Sort":    BubbleSort,
-		"Heap Sort":      HeapSort,
-		"Insertion Sort": InsertionSort,
-		"Shell Sort":     Shell,
-	}
+var functions = map[string]func([]int){
+	"Selection Sort": SelectionSort,
+	"Merge Sort":     MergeSort,
+	"Quick Sort":     QuickSort,
+	"Bubble Sort":    BubbleSort,
+	"Heap Sort":      HeapSort,
+	"Insertion Sort": InsertionSort,
+	"Shell Sort":     Shell,
+}
 
+func TestSort(t *testing.T) {
 	for name, f := range functions {
-		s := newSort(f)
-		if s.test() {
+		s := newSort()
+		if s.sort(f) {
 			t.Logf("%s success", name)
 		} else {
 			t.Fatalf("%s failed", name)
 		}
 	}
 }
+
 
