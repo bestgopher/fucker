@@ -71,6 +71,7 @@ func TestSort(t *testing.T) {
 		"Bubble Sort":    BubbleSort,
 		"Heap Sort":      HeapSort,
 		"Insertion Sort": InsertionSort,
+		"Shell Sort":     Shell,
 	}
 
 	for name, f := range functions {
@@ -82,3 +83,4 @@ func TestSort(t *testing.T) {
 		}
 	}
 }
+

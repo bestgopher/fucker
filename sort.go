@@ -11,4 +11,5 @@ var (
 	QuickSort     = internal.QuickSort
 	InsertionSort = internal.InsertionSort
 	HeapSort      = internal.HeapSort
+	Shell         = internal.Shell
 )
