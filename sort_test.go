@@ -6,8 +6,7 @@ import (
 	"time"
 )
 
-type sort struct {
-}
+type sort struct{}
 
 func newSort() *sort {
 	return &sort{}
@@ -103,5 +102,3 @@ func TestSort(t *testing.T) {
 		}
 	}
 }
-
-
