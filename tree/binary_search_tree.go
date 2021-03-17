@@ -24,6 +24,7 @@ func NewBinarySearchTree(compare CompareFunc, values ...interface{}) *BinarySear
 	return t
 }
 
+// 插入节点
 func (b *BinarySearchTree) Insert(value interface{}) {
 	if b.root == nil {
 		b.root = &bstTreeNode{value: value}
@@ -52,7 +53,8 @@ func (b *BinarySearchTree) Insert(value interface{}) {
 	}
 }
 
-func (b *BinarySearchTree) Search(value int) bool {
+// 搜索节点
+func (b *BinarySearchTree) Search(value interface{}) bool {
 	node := b.root
 	r := &bstTreeNode{value: value}
 	for node != nil {
@@ -70,11 +72,11 @@ func (b *BinarySearchTree) Search(value int) bool {
 	return false
 }
 
-func (b *BinarySearchTree) Delete(value int) {
+func (b *BinarySearchTree) Delete(value interface{}) {
 	b.root = b.delete(b.root, value)
 }
 
-func (b *BinarySearchTree) delete(node *bstTreeNode, value int) *bstTreeNode {
+func (b *BinarySearchTree) delete(node *bstTreeNode, value interface{}) *bstTreeNode {
 	if node == nil {
 		return nil
 	}

@@ -36,7 +36,7 @@ func NewAVLTree(compare CompareFunc, values ...int) *AVLTree {
 	return tree
 }
 
-func (a *AVLTree) Insert(value int) {
+func (a *AVLTree) Insert(value interface{}) {
 	if a.root == nil {
 		a.root = &avlTreeNode{value: value, height: 1}
 	}
