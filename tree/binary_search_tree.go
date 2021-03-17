@@ -1,19 +1,22 @@
 package tree
 
+// 节点
+type bstTreeNode struct {
+	value interface{}
+	left  *bstTreeNode
+	right *bstTreeNode
+}
+
+func (b *bstTreeNode) Value() interface{} { return b.value }
+
 // 二叉查找树
 type BinarySearchTree struct {
-	Root *Node
+	root    *bstTreeNode
+	compare CompareFunc
 }
 
-// 节点
-type Node struct {
-	Value int
-	Left  *Node
-	Right *Node
-}
-
-func NewBinarySearchTree(values ...int) *BinarySearchTree {
-	t := new(BinarySearchTree)
+func NewBinarySearchTree(compare CompareFunc, values ...interface{}) *BinarySearchTree {
+	t := &BinarySearchTree{compare: compare}
 	for _, v := range values {
 		t.Insert(v)
 	}
@@ -21,44 +24,45 @@ func NewBinarySearchTree(values ...int) *BinarySearchTree {
 	return t
 }
 
-func (b *BinarySearchTree) Insert(value int) {
-	if b.Root == nil {
-		b.Root = &Node{Value: value}
+func (b *BinarySearchTree) Insert(value interface{}) {
+	if b.root == nil {
+		b.root = &bstTreeNode{value: value}
 		return
 	}
 
-	node := b.Root
+	node := b.root
+	r := &bstTreeNode{value: value}
 
 	for {
-		if value < node.Value {
-			if node.Left == nil {
-				node.Left = &Node{Value: value}
+		if b.compare(r, node) < 0 {
+			if node.left == nil {
+				node.left = r
 				break
 			} else {
-				node = node.Left
+				node = node.left
 			}
 		} else {
-			if node.Right == nil {
-				node.Right = &Node{Value: value}
+			if node.right == nil {
+				node.right = r
 				break
 			} else {
-				node = node.Right
+				node = node.right
 			}
 		}
 	}
 }
 
 func (b *BinarySearchTree) Search(value int) bool {
-	node := b.Root
-
+	node := b.root
+	r := &bstTreeNode{value: value}
 	for node != nil {
 
-		if value == node.Value {
+		if value == node.value {
 			return true
-		} else if value < node.Value {
-			node = node.Left
+		} else if b.compare(r, node) < 0 {
+			node = node.left
 		} else {
-			node = node.Right
+			node = node.right
 
 		}
 	}
@@ -67,35 +71,37 @@ func (b *BinarySearchTree) Search(value int) bool {
 }
 
 func (b *BinarySearchTree) Delete(value int) {
-	b.Root = b.delete(b.Root, value)
+	b.root = b.delete(b.root, value)
 }
 
-func (b *BinarySearchTree) delete(node *Node, value int) *Node {
+func (b *BinarySearchTree) delete(node *bstTreeNode, value int) *bstTreeNode {
 	if node == nil {
 		return nil
 	}
 
-	if node.Value == value {
-		if node.Left == nil && node.Right == nil { // 左右子节点都为空时
+	r := &bstTreeNode{value: value}
+
+	if b.compare(r, node) == 0 {
+		if node.left == nil && node.right == nil { // 左右子节点都为空时
 			node = nil
-		} else if node.Left == nil && node.Right != nil { // 左子节点为空，右子节点不为空
-			node = node.Right
-		} else if node.Right == nil && node.Left != nil { // 右子节点为空，左子节点不为空
-			node = node.Left
+		} else if node.left == nil && node.right != nil { // 左子节点为空，右子节点不为空
+			node = node.right
+		} else if node.right == nil && node.left != nil { // 右子节点为空，左子节点不为空
+			node = node.left
 		} else {
 			// 左右子节点都不为空时，获取右子树的最小子节点与当前节点交换
-			n1, n2 := node, node.Right
-			for n2.Left != nil {
+			n1, n2 := node, node.right
+			for n2.left != nil {
 				n1 = n2
-				n2 = n2.Left
+				n2 = n2.left
 			}
-			node.Value = n2.Value
-			n1.Left = n2.Right
+			node.value = n2.value
+			n1.left = n2.right
 		}
-	} else if value < node.Value {
-		node.Left = b.delete(node.Left, value)
+	} else if b.compare(r, node) < 0 {
+		node.left = b.delete(node.left, value)
 	} else {
-		node.Right = b.delete(node.Right, value)
+		node.right = b.delete(node.right, value)
 	}
 
 	return node

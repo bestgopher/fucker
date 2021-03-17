@@ -6,8 +6,22 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func CompareBstTreeInt(a Value, b Value) int {
+	v1 := a.Value().(int)
+	v2 := b.Value().(int)
+
+	if v1 == v2 {
+		return 0
+	} else if v1 < v2 {
+		return -1
+	} else {
+		return 1
+	}
+}
+
 func TestSearch(t *testing.T) {
-	binaryTree := NewBinarySearchTree(3, 4, 1, 5, 6, 7)
+
+	binaryTree := NewBinarySearchTree(CompareBstTreeInt, 3, 4, 1, 5, 6, 7)
 	assert.Equal(t, binaryTree.Search(3), true)
 	assert.Equal(t, binaryTree.Search(4), true)
 	assert.Equal(t, binaryTree.Search(7), true)
@@ -17,7 +31,7 @@ func TestSearch(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
-	binaryTree := NewBinarySearchTree(3, 4, 1, 5, 6, 7)
+	binaryTree := NewBinarySearchTree(CompareBstTreeInt, 3, 4, 1, 5, 6, 7)
 	assert.Equal(t, binaryTree.Search(3), true)
 	assert.Equal(t, binaryTree.Search(4), true)
 	assert.Equal(t, binaryTree.Search(7), true)
