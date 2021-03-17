@@ -1,7 +1,7 @@
-package sort
+package fucker
 
 import (
-	"github.com/bestgopher/sort/internal"
+	"github.com/bestgopher/fucker/sort/internal"
 )
 
 var (
