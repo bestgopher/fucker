@@ -35,7 +35,7 @@ func (b *BinarySearchTree) Insert(value interface{}) {
 	r := &bstTreeNode{value: value}
 
 	for {
-		if b.compare(r, node) < 0 {
+		if c := b.compare(r, node); c < 0 {
 			if node.left == nil {
 				node.left = r
 				break
@@ -59,9 +59,9 @@ func (b *BinarySearchTree) Search(value interface{}) bool {
 	r := &bstTreeNode{value: value}
 	for node != nil {
 
-		if value == node.value {
+		if c := b.compare(r, node); c == 0 {
 			return true
-		} else if b.compare(r, node) < 0 {
+		} else if c < 0 {
 			node = node.left
 		} else {
 			node = node.right
@@ -83,7 +83,7 @@ func (b *BinarySearchTree) delete(node *bstTreeNode, value interface{}) *bstTree
 
 	r := &bstTreeNode{value: value}
 
-	if b.compare(r, node) == 0 {
+	if c := b.compare(r, node); c == 0 {
 		if node.left == nil && node.right == nil { // 左右子节点都为空时
 			node = nil
 		} else if node.left == nil && node.right != nil { // 左子节点为空，右子节点不为空
@@ -100,7 +100,7 @@ func (b *BinarySearchTree) delete(node *bstTreeNode, value interface{}) *bstTree
 			node.value = n2.value
 			n1.left = n2.right
 		}
-	} else if b.compare(r, node) < 0 {
+	} else if c < 0 {
 		node.left = b.delete(node.left, value)
 	} else {
 		node.right = b.delete(node.right, value)

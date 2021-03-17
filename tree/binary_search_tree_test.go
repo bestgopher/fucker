@@ -2,8 +2,6 @@ package tree
 
 import (
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func CompareBstTreeInt(a Value, b Value) int {
@@ -19,38 +17,12 @@ func CompareBstTreeInt(a Value, b Value) int {
 	}
 }
 
-func TestSearch(t *testing.T) {
-
+func TestBinarySearchTreeSearch(t *testing.T) {
 	binaryTree := NewBinarySearchTree(CompareBstTreeInt, 3, 4, 1, 5, 6, 7)
-	assert.Equal(t, binaryTree.Search(3), true)
-	assert.Equal(t, binaryTree.Search(4), true)
-	assert.Equal(t, binaryTree.Search(7), true)
-	assert.Equal(t, binaryTree.Search(2), false)
-	assert.Equal(t, binaryTree.Search(8), false)
-	assert.Equal(t, binaryTree.Search(12), false)
+	searchNode(binaryTree, t)
 }
 
-func TestDelete(t *testing.T) {
+func TestBinarySearchTreeDelete(t *testing.T) {
 	binaryTree := NewBinarySearchTree(CompareBstTreeInt, 3, 4, 1, 5, 6, 7)
-	assert.Equal(t, binaryTree.Search(3), true)
-	assert.Equal(t, binaryTree.Search(4), true)
-	assert.Equal(t, binaryTree.Search(7), true)
-	assert.Equal(t, binaryTree.Search(2), false)
-	assert.Equal(t, binaryTree.Search(8), false)
-	assert.Equal(t, binaryTree.Search(12), false)
-	binaryTree.Delete(3)
-	assert.Equal(t, binaryTree.Search(3), false)
-	assert.Equal(t, binaryTree.Search(4), true)
-	assert.Equal(t, binaryTree.Search(7), true)
-	assert.Equal(t, binaryTree.Search(2), false)
-	assert.Equal(t, binaryTree.Search(8), false)
-	assert.Equal(t, binaryTree.Search(12), false)
-	binaryTree.Delete(6)
-	assert.Equal(t, binaryTree.Search(3), false)
-	assert.Equal(t, binaryTree.Search(4), true)
-	assert.Equal(t, binaryTree.Search(7), true)
-	assert.Equal(t, binaryTree.Search(6), false)
-	assert.Equal(t, binaryTree.Search(2), false)
-	assert.Equal(t, binaryTree.Search(8), false)
-	assert.Equal(t, binaryTree.Search(12), false)
+	deleteNode(binaryTree, t)
 }

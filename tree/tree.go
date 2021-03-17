@@ -10,3 +10,10 @@ type CompareFunc func(v1 Value, v2 Value) int
 type Value interface {
 	Value() interface{}
 }
+
+// Any tree must be implemented the Tree interface
+type Tree interface {
+	Insert(value interface{})      // insert a value to the tree
+	Delete(value interface{})      // delete a value from the tree
+	Search(value interface{}) bool // search for a value from the tree
+}
