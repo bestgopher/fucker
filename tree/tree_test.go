@@ -1,9 +1,23 @@
 package tree
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
+
+func CompareBstTreeInt(a Value, b Value) int {
+	v1 := a.Value().(int)
+	v2 := b.Value().(int)
+
+	if v1 == v2 {
+		return 0
+	} else if v1 < v2 {
+		return -1
+	} else {
+		return 1
+	}
+}
 
 func searchNode(tree Tree, t *testing.T) {
 	assert.Equal(t, tree.Search(3), true)
