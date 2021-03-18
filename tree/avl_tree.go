@@ -53,8 +53,11 @@ func (a *AVLTree) Insert(value interface{}) {
 		a.root = node
 		return
 	}
-
+	fmt.Println(value, "insert")
+	// 插入值
 	a.insert(a.root, node)
+	// 整理高度
+	a.makeHeight(node)
 }
 
 // 插入节点到树中
@@ -63,7 +66,7 @@ func (a *AVLTree) insert(node *avlTreeNode, valueNode *avlTreeNode) {
 
 	for {
 		// 循环比较节点，找到插入的地方
-		if c := a.compare(node, valueNode); c == 0 {
+		if c := a.compare(valueNode, node); c == 0 {
 			return
 		} else if c < 0 {
 			if node.left != nil {
@@ -92,7 +95,7 @@ func (a *AVLTree) insert(node *avlTreeNode, valueNode *avlTreeNode) {
 func (a *AVLTree) rotate(node *avlTreeNode) {
 	parent := node.parent
 	flag := "" // 用于标示是LL\RR\LR\RL
-	fmt.Println("Aaa", node.parent)
+
 	for {
 		if parent == nil {
 			return
@@ -104,14 +107,15 @@ func (a *AVLTree) rotate(node *avlTreeNode) {
 			flag += "L"
 		}
 		parent.height = a.maxHeight(parent) + 1
-		if a.isBalance(parent) {
-			node = parent
-			parent = parent.parent
-		} else {
+
+		if !a.isBalance(parent) {
 			break
 		}
+
+		node = parent
+		parent = node.parent
 	}
-	fmt.Println(flag)
+
 	switch flag[len(flag)-2:] {
 	case "LL":
 		a.llRotate(parent)
@@ -135,7 +139,7 @@ func (a *AVLTree) Search(value interface{}) bool {
 	val := &avlTreeNode{value: value}
 
 	for node != nil {
-		if c := a.compare(node, val); c == 0 {
+		if c := a.compare(val, node); c == 0 {
 			return true
 		} else if c < 0 {
 			node = node.left
@@ -149,6 +153,11 @@ func (a *AVLTree) Search(value interface{}) bool {
 
 // isBalance 判断节点是否平衡
 func (a *AVLTree) isBalance(node *avlTreeNode) bool {
+	// 当节点为空时，肯定是平衡的
+	if node == nil {
+		return true
+	}
+
 	left := 0
 	if node.left != nil {
 		left = node.left.height
@@ -156,7 +165,7 @@ func (a *AVLTree) isBalance(node *avlTreeNode) bool {
 
 	right := 0
 	if node.right != nil {
-		left = node.right.height
+		right = node.right.height
 	}
 
 	h := left - right
@@ -182,7 +191,7 @@ func (a *AVLTree) llRotate(node *avlTreeNode) {
 
 	// 原左子节点放在原父节点上
 	if parent != nil {
-		if c := a.compare(parent, leftSon); c > 0 {
+		if c := a.compare(leftSon, parent); c > 0 {
 			parent.right = leftSon
 		} else {
 			parent.left = leftSon
@@ -191,9 +200,6 @@ func (a *AVLTree) llRotate(node *avlTreeNode) {
 	} else {
 		a.root = leftSon
 	}
-
-	// 整理高度
-	a.makeHeight(leftSon)
 }
 
 // rr
@@ -214,7 +220,7 @@ func (a *AVLTree) rrRotate(node *avlTreeNode) {
 
 	// 原左子节点放在原父节点上
 	if parent != nil {
-		if c := a.compare(parent, rightSon); c > 0 {
+		if c := a.compare(rightSon, parent); c > 0 {
 			parent.right = rightSon
 		} else {
 			parent.left = rightSon
@@ -223,9 +229,6 @@ func (a *AVLTree) rrRotate(node *avlTreeNode) {
 	} else {
 		a.root = rightSon
 	}
-
-	// 整理高度
-	a.makeHeight(rightSon)
 }
 
 func (a *AVLTree) lrRotate(node *avlTreeNode) {
@@ -290,11 +293,11 @@ func (a *AVLTree) maxHeight(tree *avlTreeNode) int {
 // 整理高度
 // 后序遍历
 func (a *AVLTree) makeHeight(tree *avlTreeNode) {
-	if tree == nil {
-		return
-	}
+	parent := tree
 
-	a.makeHeight(tree.left)
-	a.makeHeight(tree.right)
-	tree.height = 1 + a.maxHeight(tree)
+	for parent != nil {
+		parent.height = a.maxHeight(parent) + 1
+		fmt.Println(parent.value, "make height")
+		parent = parent.parent
+	}
 }
