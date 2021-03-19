@@ -4,6 +4,8 @@ import (
 	"math/rand"
 	"testing"
 	"time"
+
+	"github.com/bestgopher/fucker"
 )
 
 type sort struct{}
@@ -12,22 +14,11 @@ func newSort() *sort {
 	return &sort{}
 }
 
-func (s *sort) sort(f func([]int)) bool {
+func (s *sort) sort(f func([]interface{}, fucker.CompareFunc), compare fucker.CompareFunc) bool {
 	data := s.generate()
 	for _, v := range data {
-		f(v)
-		if !s.check(v) {
-			return false
-		}
-	}
-	return true
-}
-
-func (s *sort) bench(f func([]int)) bool {
-	data := s.generate()
-	for _, v := range data {
-		f(v)
-		if !s.check(v) {
+		f(v, compare)
+		if !s.check(v, compare) {
 			return false
 		}
 	}
@@ -35,13 +26,13 @@ func (s *sort) bench(f func([]int)) bool {
 }
 
 // 随机生成乱序的一些切片
-func (s *sort) generate() [][]int {
+func (s *sort) generate() [][]interface{} {
 	rand.Seed(time.Now().UnixNano())
 	var l = rand.Intn(50) + 50
-	var result = make([][]int, 0, l)
+	var result = make([][]interface{}, 0, l)
 	for i := 0; i < l; i++ {
 		length := rand.Intn(100) + 50
-		s := make([]int, 0, length)
+		s := make([]interface{}, 0, length)
 		for j := 0; j < length; j++ {
 			s = append(s, rand.Intn(10000))
 		}
@@ -49,7 +40,7 @@ func (s *sort) generate() [][]int {
 	}
 
 	// 添加三个特殊情况
-	result = append(result, []int{}, nil, []int{1})
+	result = append(result, []interface{}{}, nil, []interface{}{1})
 
 	return result
 }
@@ -68,13 +59,13 @@ func (s *sort) cloneData(datas [][]int) [][]int {
 
 // 检查切片是否是升序
 // 是升序返回true，否则返回false
-func (s *sort) check(data []int) bool {
+func (s *sort) check(data []interface{}, compare fucker.CompareFunc) bool {
 	if len(data) < 2 {
 		return true
 	}
 
 	for i := 1; i < len(data); i++ {
-		if data[i] < data[i-1] {
+		if compare(data[i], data[i-1]) == fucker.Less {
 			return false
 		}
 	}
@@ -82,7 +73,7 @@ func (s *sort) check(data []int) bool {
 	return true
 }
 
-var functions = map[string]func([]int){
+var functions = map[string]func([]interface{}, fucker.CompareFunc){
 	"Selection Sort": SelectionSort,
 	"Merge Sort":     MergeSort,
 	"Quick Sort":     QuickSort,
@@ -95,10 +86,23 @@ var functions = map[string]func([]int){
 func TestSort(t *testing.T) {
 	for name, f := range functions {
 		s := newSort()
-		if s.sort(f) {
+		if s.sort(f, compareFunc) {
 			t.Logf("%s success", name)
 		} else {
 			t.Fatalf("%s failed", name)
 		}
+	}
+}
+
+func compareFunc(i, j interface{}) fucker.Compare {
+	a := i.(int)
+	b := j.(int)
+
+	if a > b {
+		return fucker.Greater
+	} else if a == b {
+		return fucker.Equal
+	} else {
+		return fucker.Less
 	}
 }

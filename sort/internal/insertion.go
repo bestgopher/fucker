@@ -1,5 +1,9 @@
 package internal
 
+import (
+	"github.com/bestgopher/fucker"
+)
+
 /*
 插入排序
 	非常类似扑克牌的排序
@@ -17,10 +21,10 @@ package internal
 	通过二分搜索找到插入的位置(因为前面部分是有序的，所以这里可以是用二分搜索)
 	返回的位置上的元素要大于待插入元素，且此位置前面的元素小于等于待插入元素
 */
-func InsertionSort(s []int) {
+func InsertionSort(s []interface{}, f fucker.CompareFunc) {
 	for i := 1; i < len(s); i++ {
 
-		if s[i] > s[i-1] {
+		if f(s[i], s[i-1]) == fucker.Greater {
 			continue
 		}
 
@@ -28,11 +32,12 @@ func InsertionSort(s []int) {
 		start, end, middle := 0, i, 0
 		for {
 			middle = (start + end) >> 1
-			if end-start <= 1 || middle == 0 || middle == i || (s[middle] > s[i] && s[middle-1] <= s[i]) {
+			if end-start <= 1 || middle == 0 || middle == i ||
+				f(s[middle], s[i]) == fucker.Greater && f(s[middle-1], s[i]) != fucker.Greater {
 				break
-			} else if s[middle] > s[i] {
+			} else if f(s[middle], s[i]) == fucker.Greater {
 				end = middle
-			} else if s[middle] <= s[i] {
+			} else if f(s[middle], s[i]) != fucker.Greater {
 				start = middle + 1
 			}
 		}

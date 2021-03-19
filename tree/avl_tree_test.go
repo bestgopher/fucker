@@ -4,6 +4,7 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/bestgopher/fucker"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -171,13 +172,13 @@ func testCheckValue(node *avlTreeNode) bool {
 	}
 
 	if node.left != nil {
-		if c := CompareBstTreeInt(node.left, node); c >= 0 {
+		if CompareBstTreeInt(node.left, node) == fucker.Greater {
 			return false
 		}
 	}
 
 	if node.right != nil {
-		if c := CompareBstTreeInt(node.right, node); c <= 0 {
+		if CompareBstTreeInt(node.right, node) == fucker.Less {
 			return false
 		}
 	}
@@ -196,8 +197,8 @@ func testCheckRelationship(node *avlTreeNode, isRoot bool) bool {
 			return false
 		}
 	} else {
-		if !((node.parent.right != nil && CompareBstTreeInt(node, node.parent.right) == 0) ||
-			(node.parent.left != nil && CompareBstTreeInt(node, node.parent.left) == 0)) {
+		if !((node.parent.right != nil && CompareBstTreeInt(node, node.parent.right) == fucker.Equal) ||
+			(node.parent.left != nil && CompareBstTreeInt(node, node.parent.left) == fucker.Equal)) {
 			return false
 		}
 	}

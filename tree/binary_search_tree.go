@@ -1,6 +1,10 @@
 package tree
 
-// 节点
+import (
+	"github.com/bestgopher/fucker"
+)
+
+// BST节点
 type bstTreeNode struct {
 	value interface{}
 	left  *bstTreeNode
@@ -12,10 +16,10 @@ func (b *bstTreeNode) Value() interface{} { return b.value }
 // 二叉查找树
 type BinarySearchTree struct {
 	root    *bstTreeNode
-	compare CompareFunc
+	compare fucker.CompareFunc
 }
 
-func NewBinarySearchTree(compare CompareFunc, values ...interface{}) *BinarySearchTree {
+func NewBinarySearchTree(compare fucker.CompareFunc, values ...interface{}) *BinarySearchTree {
 	t := &BinarySearchTree{compare: compare}
 	for _, v := range values {
 		t.Insert(v)
@@ -34,21 +38,25 @@ func (b *BinarySearchTree) Insert(value interface{}) {
 	node := b.root
 	r := &bstTreeNode{value: value}
 
+LOOP:
 	for {
-		if c := b.compare(r, node); c < 0 {
+		switch b.compare(r, node) {
+		case fucker.Less:
 			if node.left == nil {
 				node.left = r
 				break
 			} else {
 				node = node.left
 			}
-		} else {
+		case fucker.Greater:
 			if node.right == nil {
 				node.right = r
 				break
 			} else {
 				node = node.right
 			}
+		default:
+			break LOOP
 		}
 	}
 }
@@ -59,11 +67,12 @@ func (b *BinarySearchTree) Search(value interface{}) Value {
 	r := &bstTreeNode{value: value}
 
 	for node != nil {
-		if c := b.compare(r, node); c == 0 {
+		switch b.compare(r, node) {
+		case fucker.Equal:
 			return node
-		} else if c < 0 {
+		case fucker.Less:
 			node = node.left
-		} else {
+		case fucker.Greater:
 			node = node.right
 		}
 	}
@@ -82,7 +91,8 @@ func (b *BinarySearchTree) delete(node *bstTreeNode, value interface{}) *bstTree
 
 	r := &bstTreeNode{value: value}
 	// 比较当前节点与待删除节点的值
-	if c := b.compare(r, node); c == 0 {
+	switch b.compare(r, node) {
+	case fucker.Equal:
 		if node.left == nil && node.right == nil { // 左右子节点都为空时
 			node = nil
 		} else if node.left == nil && node.right != nil { // 左子节点为空，右子节点不为空
@@ -97,9 +107,9 @@ func (b *BinarySearchTree) delete(node *bstTreeNode, value interface{}) *bstTree
 			}
 			node.value, n1.left = n2.value, n2.right
 		}
-	} else if c < 0 {
+	case fucker.Less:
 		node.left = b.delete(node.left, value)
-	} else {
+	case fucker.Greater:
 		node.right = b.delete(node.right, value)
 	}
 

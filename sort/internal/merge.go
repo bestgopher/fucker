@@ -1,5 +1,9 @@
 package internal
 
+import (
+	"github.com/bestgopher/fucker"
+)
+
 // 归并排序
 // 分支法：
 // 	1.分解：
@@ -30,7 +34,7 @@ package internal
 // -->	17 24 31 45 50 63 85 96
 //
 // 时间复杂度为O(nlogn)
-func MergeSort(s []int) {
+func MergeSort(s []interface{}, f fucker.CompareFunc) {
 	n := len(s)
 	if n < 2 {
 		return
@@ -39,18 +43,18 @@ func MergeSort(s []int) {
 	mid := n >> 1
 	s1 := s[0:mid]
 	s2 := s[mid:n]
-	MergeSort(s1)
-	MergeSort(s2)
-	merge(s1, s2, s)
+	MergeSort(s1, f)
+	MergeSort(s2, f)
+	merge(s1, s2, s, f)
 }
 
 // 合并2个已排序的序列s1和s2到s中.
-func merge(s1, s2, s []int) {
-	s3 := make([]int, len(s1))
+func merge(s1, s2, s []interface{}, f fucker.CompareFunc) {
+	s3 := make([]interface{}, len(s1))
 	copy(s3, s1) // 这里只需要一个数组的备份
 	// i: s3(s1的copy)的索引，j: s2的索引
 	for i, j := 0, 0; i+j < len(s); {
-		if j == len(s2) || (i < len(s3) && s3[i] <= s2[j]) {
+		if j == len(s2) || (i < len(s3) && f(s3[i], s2[j]) != fucker.Greater) {
 			s[i+j] = s3[i]
 			i++
 		} else {

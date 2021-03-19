@@ -3,19 +3,19 @@ package tree
 import (
 	"testing"
 
+	"github.com/bestgopher/fucker"
 	"github.com/stretchr/testify/assert"
 )
 
-func CompareBstTreeInt(a Value, b Value) int {
-	v1 := a.Value().(int)
-	v2 := b.Value().(int)
-
+func CompareBstTreeInt(a interface{}, b interface{}) fucker.Compare {
+	v1 := a.(Value).Value().(int)
+	v2 := b.(Value).Value().(int)
 	if v1 == v2 {
-		return 0
+		return fucker.Equal
 	} else if v1 < v2 {
-		return -1
+		return fucker.Less
 	} else {
-		return 1
+		return fucker.Greater
 	}
 }
 

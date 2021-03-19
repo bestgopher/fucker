@@ -2,6 +2,8 @@ package internal
 
 import (
 	"math"
+
+	"github.com/bestgopher/fucker"
 )
 
 /*
@@ -40,7 +42,7 @@ import (
 再分成2列
 再分成1列
 */
-func Shell(s []int) {
+func Shell(s []interface{}, f fucker.CompareFunc) {
 	// 先生成步长序列，按照希尔本人的算法来算 n / 2^k
 	steps := stepSequence(s)
 	// 分成多少列来排序
@@ -51,7 +53,7 @@ func Shell(s []int) {
 		for col := 0; col < step; col++ {
 			for i := col + step; i < len(s); i += step {
 				for j := i; j > col; j -= step {
-					if s[j] < s[j-step] {
+					if f(s[j], s[j-step]) == fucker.Less {
 						s[j], s[j-step] = s[j-step], s[j]
 					} else {
 						break
@@ -66,7 +68,7 @@ func Shell(s []int) {
 // 获取步长的方法，希尔本人提供的公式
 // 此公式得到步长希尔排序最差复杂度为O(n^2)
 // Deprecated
-func stepSequence1(s []int) []int {
+func stepSequence1(s []interface{}) []int {
 	steps := make([]int, 0)
 	for i := len(s) >> 1; i >= 1; i >>= 1 {
 		steps = append(steps, i)
@@ -79,7 +81,7 @@ func stepSequence1(s []int) []int {
 	8 * 2^k - 6 * 2^((k+1)/2) + 1, k is odd
 目前已知最好的步长序列，此公式最坏时间复杂度为O(n^(4/3))
 */
-func stepSequence(s []int) []int {
+func stepSequence(s []interface{}) []int {
 	steps := make([]int, 0)
 
 	for k := 0; ; k++ {

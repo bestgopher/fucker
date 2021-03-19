@@ -1,5 +1,9 @@
 package internal
 
+import (
+	"github.com/bestgopher/fucker"
+)
+
 /*
 堆排序
 	可以认为是选择排序的一种优化
@@ -12,34 +16,34 @@ package internal
 时间复杂度:
 	步骤2的执行n-1次，2.3执行logn，因此时间复杂度是O(nlogn)
 */
-func HeapSort(s []int) {
+func HeapSort(s []interface{}, f fucker.CompareFunc) {
 	// 构建大顶堆
-	heapify(s)
+	heapify(s, f)
 	heapLen := len(s) - 1
 
 	for ; heapLen >= 1; heapLen-- {
 		s[0], s[heapLen] = s[heapLen], s[0]
-		downHeap(s[:heapLen], 0)
+		downHeap(s[:heapLen], 0, f)
 	}
 
 }
 
 // heapify函数是用与构建一个堆
-func heapify(s []int) {
+func heapify(s []interface{}, f fucker.CompareFunc) {
 	parent := (len(s) - 1) / 2
 	for i := parent; i >= 0; i-- {
-		downHeap(s, i)
+		downHeap(s, i, f)
 	}
 }
 
 // downHeap是自底向上使得元素冒泡
-func downHeap(s []int, index int) {
+func downHeap(s []interface{}, index int, f fucker.CompareFunc) {
 	for index*2+1 < len(s) {
 		max := index*2 + 1
-		if index*2+2 < len(s) && s[index*2+1] < s[index*2+2] {
+		if index*2+2 < len(s) && f(s[index*2+1], s[index*2+2]) == fucker.Less {
 			max = index*2 + 2
 		}
-		if s[max] > s[index] {
+		if f(s[max], s[index]) == fucker.Greater {
 			s[max], s[index] = s[index], s[max]
 			index = max
 		} else {

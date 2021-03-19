@@ -1,5 +1,9 @@
 package internal
 
+import (
+	"github.com/bestgopher/fucker"
+)
+
 /*
 选择排序
 
@@ -13,14 +17,14 @@ package internal
 缺点:
 	最优时间复杂度和最差时间复杂度都是O(n^2)，因为选择完一圈不能确定序列是否有序。
 */
-func SelectionSort(s []int) {
+func SelectionSort(s []interface{}, f fucker.CompareFunc) {
 
 	for i := len(s) - 1; i > 0; i-- {
 		maxIndex := 0
 
 		for j := 1; j <= i; j++ {
 			// 注:这里只有加上等于增加算法的稳定(但是算法本身不是稳定的)
-			if s[j] >= s[maxIndex] {
+			if f(s[j], s[maxIndex]) != fucker.Less {
 				maxIndex = j
 			}
 		}

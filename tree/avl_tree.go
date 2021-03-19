@@ -1,5 +1,7 @@
 package tree
 
+import "github.com/bestgopher/fucker"
+
 // 平衡二叉搜索树的节点
 type avlTreeNode struct {
 	value  interface{}  // value
@@ -29,10 +31,10 @@ func (a *avlTreeNode) Value() interface{} { return a.value }
 */
 type AVLTree struct {
 	root    *avlTreeNode
-	compare CompareFunc
+	compare fucker.CompareFunc
 }
 
-func NewAVLTree(compare CompareFunc, values ...int) *AVLTree {
+func NewAVLTree(compare fucker.CompareFunc, values ...int) *AVLTree {
 	tree := &AVLTree{compare: compare}
 
 	for _, v := range values {
@@ -57,26 +59,28 @@ func (a *AVLTree) Insert(value interface{}) {
 func (a *AVLTree) insert(node *avlTreeNode, valueNode *avlTreeNode) {
 	// 寻找要插入的位置
 
+LOOP:
 	for {
 		// 循环比较节点，找到插入的地方
-		if c := a.compare(valueNode, node); c == 0 {
-			return
-		} else if c < 0 {
+		switch a.compare(valueNode, node) {
+		case fucker.Less:
 			if node.left != nil {
 				node = node.left
 			} else {
 				valueNode.parent = node
 				node.left = valueNode
-				break
+				break LOOP
 			}
-		} else {
+		case fucker.Greater:
 			if node.right != nil {
 				node = node.right
 			} else {
 				valueNode.parent = node
 				node.right = valueNode
-				break
+				break LOOP
 			}
+		default:
+			return
 		}
 	}
 
@@ -93,10 +97,14 @@ func (a *AVLTree) rotate(node *avlTreeNode) {
 		if parent == nil {
 			return
 		}
-		if c := a.compare(node, parent); c > 0 {
+		switch a.compare(node, parent) {
+		case fucker.Greater:
+
 			flag += "R"
-		} else {
+		case fucker.Less:
 			flag += "L"
+		default:
+			return
 		}
 
 		parent.height = a.maxHeight(parent) + 1
@@ -132,12 +140,13 @@ func (a *AVLTree) Search(value interface{}) Value {
 	val := &avlTreeNode{value: value}
 
 	for node != nil {
-		if c := a.compare(val, node); c == 0 {
-			return node
-		} else if c < 0 {
+		switch a.compare(val, node) {
+		case fucker.Less:
 			node = node.left
-		} else {
+		case fucker.Greater:
 			node = node.right
+		default:
+			return node
 		}
 	}
 
@@ -184,9 +193,10 @@ func (a *AVLTree) llRotate(node *avlTreeNode) {
 
 	// 原左子节点放在原父节点上
 	if parent != nil {
-		if c := a.compare(leftSon, parent); c > 0 {
+		switch a.compare(leftSon, parent) {
+		case fucker.Greater:
 			parent.right = leftSon
-		} else {
+		case fucker.Less:
 			parent.left = leftSon
 		}
 		leftSon.parent = parent
@@ -216,9 +226,10 @@ func (a *AVLTree) rrRotate(node *avlTreeNode) {
 
 	// 原左子节点放在原父节点上
 	if parent != nil {
-		if c := a.compare(rightSon, parent); c > 0 {
+		switch a.compare(rightSon, parent) {
+		case fucker.Greater:
 			parent.right = rightSon
-		} else {
+		case fucker.Less:
 			parent.left = rightSon
 		}
 		rightSon.parent = parent

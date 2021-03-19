@@ -1,5 +1,9 @@
 package internal
 
+import (
+	"github.com/bestgopher/fucker"
+)
+
 /*
 冒泡排序
 
@@ -19,12 +23,12 @@ package internal
 	在这个序列中，第一个数7冒泡到10前面就不会向上冒泡。并且10， 11， 12也已经有序了。因此第二次冒泡的时候，只需要冒泡到7的位置即可
 最终代码 BubbleSort
 */
-func BubbleSort(s []int) {
+func BubbleSort(s []interface{}, f fucker.CompareFunc) {
 	for i := len(s) - 1; i > 0; i-- {
 		// sortedIndex的初始值在数组完全有序的时候也要有用
 		sortedIndex := 0
 		for j := 1; j <= i; j++ {
-			if s[j] < s[j-1] {
+			if f(s[j], s[j-1]) == fucker.Less {
 				s[j], s[j-1] = s[j-1], s[j]
 				sortedIndex = j
 			}
@@ -35,10 +39,10 @@ func BubbleSort(s []int) {
 }
 
 // Deprecated
-func BubbleSort1(s []int) {
+func BubbleSort1(s []interface{}, f fucker.CompareFunc) {
 	for i := len(s); i > 0; i-- {
 		for j := 1; j < i; j++ {
-			if s[j] < s[j-1] {
+			if f(s[j], s[j-1]) == fucker.Less {
 				s[j], s[j-1] = s[j-1], s[j]
 			}
 		}
@@ -46,11 +50,11 @@ func BubbleSort1(s []int) {
 }
 
 // Deprecated
-func BubbleSort2(s []int) {
+func BubbleSort2(s []interface{}, f fucker.CompareFunc) {
 	for i := len(s); i > 0; i-- {
 		flag := true
 		for j := 1; j < i; j++ {
-			if s[j] < s[j-1] {
+			if f(s[j], s[j-1]) == fucker.Less {
 				s[j], s[j-1] = s[j-1], s[j]
 				flag = false
 			}

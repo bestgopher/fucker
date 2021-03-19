@@ -1,5 +1,9 @@
 package internal
 
+import (
+	"github.com/bestgopher/fucker"
+)
+
 // 快速排序
 //		基于分治法，但是是把所有的复杂操作在递归调用之前做完。
 // 		主要思想是应用分治法把序列s分解为子序列，递归地排序每个子序列，然后通过简单串联的方式合并这些已排序的子序列。
@@ -17,7 +21,7 @@ package internal
 //		把s中的元素按照先插入L中的元素、然后插入E中的元素、最后插入G中的元素的顺序放回。
 // 此排序为非原地，有大量的容器创建和删除
 // Deprecated
-func QuickSort1(s []int) {
+func QuickSort1(s []interface{}, f fucker.CompareFunc) {
 	n := len(s)
 	if n < 2 {
 		return
@@ -25,24 +29,24 @@ func QuickSort1(s []int) {
 
 	p := s[0]
 	var (
-		L []int
-		E []int
-		G []int
+		L []interface{}
+		E []interface{}
+		G []interface{}
 	)
 
 	for _, v := range s {
-		switch {
-		case v < p:
+		switch f(v, p) {
+		case fucker.Less:
 			L = append(L, v)
-		case v == p:
+		case fucker.Equal:
 			E = append(E, v)
-		case v > p:
+		case fucker.Greater:
 			G = append(G, v)
 		}
 	}
 
-	QuickSort1(L)
-	QuickSort1(G)
+	QuickSort1(L, f)
+	QuickSort1(G, f)
 
 	copy(s[:len(L)], L)
 	copy(s[len(L):len(L)+len(E)], E)
@@ -59,7 +63,7 @@ func QuickSort1(s []int) {
 //		6.再次重复2-5步，直到begin == end为止
 //		7.最后s[begin] = p
 //		8.递归快速排序以begin为分界线的两部分序列
-func QuickSort(s []int) {
+func QuickSort(s []interface{}, f fucker.CompareFunc) {
 	n := len(s)
 	if n < 2 {
 		return
@@ -70,7 +74,7 @@ func QuickSort(s []int) {
 
 	for begin < end {
 		for begin < end {
-			if p < s[end] {
+			if f(p, s[end]) == fucker.Less {
 				end--
 			} else {
 				s[begin] = s[end]
@@ -80,7 +84,7 @@ func QuickSort(s []int) {
 		}
 
 		for begin < end {
-			if p > s[begin] {
+			if f(p, s[begin]) == fucker.Greater {
 				begin++
 			} else {
 				s[end] = s[begin]
@@ -91,6 +95,6 @@ func QuickSort(s []int) {
 	}
 
 	s[begin] = p
-	QuickSort(s[:begin])
-	QuickSort(s[begin+1:])
+	QuickSort(s[:begin], f)
+	QuickSort(s[begin+1:], f)
 }
