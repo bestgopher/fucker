@@ -1,9 +1,5 @@
 package tree
 
-import (
-	"fmt"
-)
-
 // 平衡二叉搜索树的节点
 type avlTreeNode struct {
 	value  interface{}  // value
@@ -106,13 +102,13 @@ func (a *AVLTree) rotate(node *avlTreeNode) {
 		parent.height = a.maxHeight(parent) + 1
 
 		if !a.isBalance(parent) {
-			fmt.Println(flag, parent, node)
 			break
 		}
 
 		node = parent
 		parent = node.parent
 	}
+
 	switch flag[len(flag)-2:] {
 	case "LL":
 		a.llRotate(parent)
@@ -236,42 +232,40 @@ func (a *AVLTree) rrRotate(node *avlTreeNode) {
 
 // lr
 func (a *AVLTree) lrRotate(node *avlTreeNode) {
-	leftSon := node.left                       // 左子节点
-	rightGrandson := leftSon.right             // 右孙子节点
-	rightGrandsonLeftSon := rightGrandson.left // 右孙子节点的左节点
+	rightSon := node.right                           // node节点的右子节点
+	rightSonLeftSon := rightSon.left                 // node节点的右子节点的左子节点
+	rightSonLeftSonRightSon := rightSonLeftSon.right // node节点的右子节点的左子节点的右子节点
 
-	node.left = rightGrandson
-	rightGrandson.parent = node
+	node.right = rightSonLeftSon
+	rightSonLeftSon.parent = node
 
-	rightGrandson.left = leftSon
-	leftSon.parent = rightGrandson
+	rightSonLeftSon.right = rightSon
+	rightSon.parent = rightSonLeftSon
 
-	leftSon.left = rightGrandsonLeftSon
-	if rightGrandsonLeftSon != nil {
-		rightGrandsonLeftSon.parent = leftSon
+	rightSon.left = rightSonLeftSonRightSon
+	if rightSonLeftSonRightSon != nil {
+		rightSonLeftSonRightSon.parent = rightSon
 	}
-
 	// 右旋
 	a.rrRotate(node)
 }
 
 // RL
 func (a *AVLTree) rlRotate(node *avlTreeNode) {
-	rightSon := node.right                     // 右子节点
-	leftGrandson := rightSon.left              // 左孙子节点
-	leftGrandsonRightSon := leftGrandson.right // 左孙子节点的右节点
+	leftSon := node.left                           // node的左子节点
+	leftSonRightSon := leftSon.right               // node的左子节点的右子节点
+	leftSonRightSonLeftSon := leftSonRightSon.left // node的左子节点的右子节点的左子节点
 
-	node.right = leftGrandson
-	leftGrandson.parent = node
+	node.left = leftSonRightSon
+	leftSonRightSon.parent = node
 
-	leftGrandson.right = rightSon
-	rightSon.parent = leftGrandson
+	leftSonRightSon.left = leftSon
+	leftSon.parent = leftSonRightSon
 
-	rightSon.left = leftGrandsonRightSon
-	if leftGrandsonRightSon != nil {
-		leftGrandsonRightSon.parent = rightSon
+	leftSon.right = leftSonRightSonLeftSon
+	if leftSonRightSonLeftSon != nil {
+		leftSonRightSonLeftSon.parent = leftSon
 	}
-
 	// 左旋
 	a.llRotate(node)
 }

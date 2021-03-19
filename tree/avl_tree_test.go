@@ -27,19 +27,19 @@ func TestAVLTreeInsertRR(t *testing.T) {
 	//   10
 	//   /\
 	//  8  20
-	//      \
-	//      30
-	//       \
-	//       40
-	ass.Nil(testAvlInsert([]int{10, 8, 20, 15, 30, 40}))
-	//   10
-	//   /\
-	//  8  20
 	//     /\
 	//    15 30
 	//       /
 	//      25
 	ass.Nil(testAvlInsert([]int{10, 8, 20, 15, 30, 25}))
+	//   10
+	//   /\
+	//  8  20
+	//     /\
+	//    15 30
+	//        \
+	//        40
+	ass.Nil(testAvlInsert([]int{10, 8, 20, 15, 30, 40}))
 }
 
 // 插入情况为ll旋转
@@ -77,28 +77,57 @@ func TestAVLTreeInsertLL(t *testing.T) {
 	ass.Nil(testAvlInsert([]int{30, 20, 40, 10, 25, 15}))
 }
 
-// 插入情况为lr旋转
 func TestAVLTreeInsertLR(t *testing.T) {
 	ass := assert.New(t)
-
-	//    30
-	//    /
-	//   20
+	//  30
+	//   \
+	//   40
 	//   /
-	//  10
-	ass.Nil(testAvlInsert([]int{30, 20, 10}))
+	//  35
+	ass.Nil(testAvlInsert([]int{30, 40, 35}))
+	//     30
+	//    / \
+	//   20 40
+	//     / \
+	//    35 50
+	//    /
+	//   32
+	ass.Nil(testAvlInsert([]int{30, 20, 40, 35, 50, 32}))
+	//     30
+	//    / \
+	//   20 40
+	//     / \
+	//    35 50
+	//     \
+	//     36
+	ass.Nil(testAvlInsert([]int{30, 20, 40, 35, 50, 36}))
 }
 
 // 插入情况为rl旋转
 func TestAVLTreeInsertRL(t *testing.T) {
 	ass := assert.New(t)
-
 	//    30
 	//    /
 	//   20
-	//   /
-	//  10
+	//    \
+	//    25
 	ass.Nil(testAvlInsert([]int{30, 20, 25}))
+	//       30
+	//       / \
+	//      20 40
+	//     / \
+	//    10 25
+	//        \
+	//        28
+	ass.Nil(testAvlInsert([]int{30, 20, 40, 10, 25, 18}))
+	//        30
+	//       / \
+	//      20 40
+	//     / \
+	//    10 25
+	//       /
+	//      18
+	ass.Nil(testAvlInsert([]int{30, 20, 40, 10, 25, 15}))
 }
 
 func TestAVLTreeSearch(t *testing.T) {
@@ -111,26 +140,14 @@ func TestAVLTreeDelete(t *testing.T) {
 	//deleteNode(binaryTree, t)
 }
 
-// 获取树的高度
-func testGetHeight(node *avlTreeNode) int {
-	if node == nil {
-		return 0
-	}
-
-	leftHeight := testGetHeight(node.left)
-	rightHeight := testGetHeight(node.right)
-
-	if leftHeight > rightHeight {
-		return leftHeight + 1
-	} else {
-		return rightHeight + 1
-	}
-}
-
 // 测试插入的数据
 func testAvlInsert(values []int) error {
 	// 先找出最大值列表的最大值
 	tree := NewAVLTree(CompareBstTreeInt, values...)
+	return testCheckAvl(tree)
+}
+
+func testCheckAvl(tree *AVLTree) error {
 	if !testCheckValue(tree.root) {
 		return errors.New("检查值失败")
 	}
