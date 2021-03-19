@@ -93,11 +93,9 @@ func (b *BinarySearchTree) delete(node *bstTreeNode, value interface{}) *bstTree
 			// 左右子节点都不为空时，获取右子树的最小子节点与当前节点交换
 			n1, n2 := node, node.right
 			for n2.left != nil {
-				n1 = n2
-				n2 = n2.left
+				n1, n2 = n2, n2.left
 			}
-			node.value = n2.value
-			n1.left = n2.right
+			node.value, n1.left = n2.value, n2.right
 		}
 	} else if c < 0 {
 		node.left = b.delete(node.left, value)
