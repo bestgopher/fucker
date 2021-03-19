@@ -54,13 +54,13 @@ func (b *BinarySearchTree) Insert(value interface{}) {
 }
 
 // 搜索节点
-func (b *BinarySearchTree) Search(value interface{}) bool {
+func (b *BinarySearchTree) Search(value interface{}) Value {
 	node := b.root
 	r := &bstTreeNode{value: value}
 
 	for node != nil {
 		if c := b.compare(r, node); c == 0 {
-			return true
+			return node
 		} else if c < 0 {
 			node = node.left
 		} else {
@@ -68,7 +68,7 @@ func (b *BinarySearchTree) Search(value interface{}) bool {
 		}
 	}
 
-	return false
+	return nil
 }
 
 func (b *BinarySearchTree) Delete(value interface{}) {
