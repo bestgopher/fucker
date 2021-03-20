@@ -27,7 +27,7 @@
         不稳定的排序：1 3(2) 3(1) 4 5 7
        ```
 
-     ​      稳定的排序就是排序后第一个`3`还是在第二个`3`前面。如果两个`3`的相对次序交换了，则就不是稳定的排序。
+			稳定的排序就是排序后第一个`3`还是在第二个`3`前面。如果两个`3`的相对次序交换了，则就不是稳定的排序。
 
   - 原地算法(In-place Algorithm)
 
@@ -38,4 +38,3 @@
 
 - [二叉查找树(Binary Search Tree，BST树)](https://github.com/bestgopher/fucker/blob/master/tree/binary_search_tree.go)
 -  [二叉平衡查找树(AVL Tree)](https://github.com/bestgopher/fucker/blob/master/tree/avl_tree.go)
-
