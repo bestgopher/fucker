@@ -1,6 +1,8 @@
 package tree
 
-import "github.com/bestgopher/fucker"
+import (
+	"github.com/bestgopher/fucker"
+)
 
 // 平衡二叉搜索树的节点
 type avlTreeNode struct {
