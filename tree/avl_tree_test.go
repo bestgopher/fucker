@@ -132,13 +132,22 @@ func TestAVLTreeInsertRL(t *testing.T) {
 }
 
 func TestAVLTreeSearch(t *testing.T) {
-	binaryTree := NewAVLTree(CompareBstTreeInt, 3, 4, 1, 5, 6, 7)
-	searchNode(binaryTree, t)
+	avlTree := NewAVLTree(CompareBstTreeInt, 3, 4, 1, 5, 6, 7)
+	searchNode(avlTree, t)
 }
 
 func TestAVLTreeDelete(t *testing.T) {
-	//binaryTree := NewAVLTree(CompareBstTreeInt, 3, 4, 1, 5, 6, 7)
-	//deleteNode(binaryTree, t)
+
+	v := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+
+	for i := 0; i < len(v); i++ {
+		avlTree1 := NewAVLTree(CompareBstTreeInt, v...)
+		assert.Nil(t, testCheckAvl(avlTree1))
+		assert.NotNil(t, avlTree1.Search(v[i]))
+		avlTree1.Delete(v[i])
+		assert.Nil(t, avlTree1.Search(v[i]))
+		assert.Nilf(t, testCheckAvl(avlTree1), "删除节点 %d", v[i])
+	}
 }
 
 // 测试插入的数据

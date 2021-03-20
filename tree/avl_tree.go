@@ -131,7 +131,76 @@ func (a *AVLTree) rotate(node *avlTreeNode) {
 
 // 删除元素
 func (a *AVLTree) Delete(value interface{}) {
-	panic("implement me")
+	n := &avlTreeNode{value: value}
+	node := a.root
+	isLeft := false // 是父节点的左节点的时候为true，反之为false
+
+LOOP:
+	for node != nil {
+		switch a.compare(n, node) {
+		case fucker.Equal:
+			parent := node.parent
+
+			if node.left != nil && node.right != nil {
+				// 当node节点的左右节点都不为空时，获取node节点右节点的最小节点，与node交换
+				smallestRightNode := node.right
+				if smallestRightNode.left != nil {
+					smallestRightNode = smallestRightNode.left
+				}
+
+				node.value = smallestRightNode.value
+				if smallestRightNode.right != nil {
+					smallestRightNode.value = smallestRightNode.right.value
+					smallestRightNode.right.parent = nil
+					smallestRightNode.right = nil
+				}
+
+			} else if node.left != nil && node.right == nil {
+				// 当只有左节点不为空时，直接左节点替换当前节点
+				if isLeft {
+					node.parent.left = node.left
+				} else {
+					node.parent.right = node.left
+				}
+				node.left.parent = parent
+
+			} else if node.left == nil && node.right != nil {
+				// 当只有右节点不为空时，直接右节点替换当前节点
+				if isLeft {
+					node.parent.left = node.right
+				} else {
+					node.parent.right = node.right
+				}
+				node.right.parent = parent
+
+			} else {
+				// 当左右节点都为空时，直接移除当前节点
+				if isLeft {
+					node.parent.left = nil
+				} else {
+					node.parent.right = nil
+				}
+			}
+			// 从父节点开始重新整理高度
+			if parent == nil {
+				a.makeHeight(a.root)
+			} else {
+				a.makeHeight(parent)
+			}
+			break LOOP
+
+		case fucker.Less:
+			node = node.left
+			isLeft = true
+
+		case fucker.Greater:
+			node = node.right
+			isLeft = false
+
+		default:
+			break LOOP
+		}
+	}
 }
 
 // 查找元素
