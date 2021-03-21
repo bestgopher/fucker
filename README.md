@@ -7,13 +7,13 @@
 
 | 算法                                                         | 时间复杂度          | 空间复杂度 | 稳定性 |
 | ------------------------------------------------------------ | ------------------- | ---------- | ------ |
-| [Bubble](https://github.com/bestgopher/sort/blob/master/internal/bubble.go) | O( n^2 )            | O(1)       | yes    |
-| [Selection](https://github.com/bestgopher/sort/blob/master/internal/selection.go) | O( n^2 )            | O(1)       | no     |
-| [Heap](https://github.com/bestgopher/sort/blob/master/internal/heap.go) | O(nlogn)            | O(1)       | no     |
-| [Insertion](https://github.com/bestgopher/sort/blob/master/internal/insertion.go) | O(n^2)              | O(1)       | yes    |
-| [Merge](https://github.com/bestgopher/sort/blob/master/internal/merge.go) | O(nlogn)            | O(n)       | yes    |
-| [Quick](https://github.com/bestgopher/sort/blob/master/internal/quick.go) | O(nlogn)            | O(1)       | no     |
-| [Shell](https://github.com/bestgopher/sort/blob/master/internal/shell.go) | O(n^(4/3)) ~ O(n^2) | 取决于步长 | no     |
+| [Bubble](https://github.com/bestgopher/fucker/blob/master/sort/internal/bubble.go) | O( n^2 )            | O(1)       | yes    |
+| [Selection](https://github.com/bestgopher/fucker/blob/master/sort/internal/selection.go) | O( n^2 )            | O(1)       | no     |
+| [Heap](https://github.com/bestgopher/fucker/blob/master/sort/internal/heap.go) | O(nlogn)            | O(1)       | no     |
+| [Insertion](https://github.com/bestgopher/fucker/blob/master/sort/internal/insertion.go) | O(n^2)              | O(1)       | yes    |
+| [Merge](https://github.com/bestgopher/fucker/blob/master/sort/internal/merge.go) | O(nlogn)            | O(n)       | yes    |
+| [Quick](https://github.com/bestgopher/fucker/blob/master/sort/internal/quick.go) | O(nlogn)            | O(1)       | no     |
+| [Shell](https://github.com/bestgopher/fucker/blob/master/sort/internal/shell.go) | O(n^(4/3)) ~ O(n^2) | 取决于步长 | no     |
 
 - 概念
 
