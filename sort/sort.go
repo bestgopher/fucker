@@ -1,4 +1,4 @@
-package fucker
+package sort
 
 import (
 	"github.com/bestgopher/fucker/sort/internal"

@@ -1,4 +1,4 @@
-package fucker
+package sort
 
 import (
 	"math/rand"
