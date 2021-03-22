@@ -80,7 +80,8 @@ var functions = map[string]func([]interface{}, fucker.CompareFunc){
 	"Bubble Sort":    BubbleSort,
 	"Heap Sort":      HeapSort,
 	"Insertion Sort": InsertionSort,
-	"Shell Sort":     Shell,
+	"Shell Sort":     ShellSort,
+	"Counting Sort":  CountingSort,
 }
 
 func TestSort(t *testing.T) {
