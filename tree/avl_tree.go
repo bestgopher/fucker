@@ -82,6 +82,7 @@ LOOP:
 				break LOOP
 			}
 		default:
+			node.value = valueNode.value
 			return
 		}
 	}

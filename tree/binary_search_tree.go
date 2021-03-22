@@ -41,17 +41,20 @@ func (b *BinarySearchTree) Insert(value interface{}) {
 LOOP:
 	for {
 		switch b.compare(r, node) {
+		case fucker.Equal:
+			node.value = r.value
+			return
 		case fucker.Less:
 			if node.left == nil {
 				node.left = r
-				break
+				break LOOP
 			} else {
 				node = node.left
 			}
 		case fucker.Greater:
 			if node.right == nil {
 				node.right = r
-				break
+				break LOOP
 			} else {
 				node = node.right
 			}
@@ -80,6 +83,10 @@ func (b *BinarySearchTree) Search(value interface{}) Value {
 	return nil
 }
 
+// 删除节点
+// 当被删除节点为叶子节点时(即没有子节点)，直接删除此节点
+// 当被删除节点只有一个子节点时，删除此节点，然后子节点替换到此节点的位置
+// 当被删除节点有两个子节点时，删除此节点，使用此节点的后继(前驱)节点替换此节点位置(后继:此节点右子树中的最小节点，前驱：此节点左子树中的最大节点)
 func (b *BinarySearchTree) Delete(value interface{}) {
 	b.root = b.delete(b.root, value)
 }
