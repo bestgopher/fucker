@@ -4,8 +4,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/bestgopher/fucker"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/bestgopher/fucker"
 )
 
 // 插入情况为rr旋转
@@ -16,7 +17,7 @@ func TestAVLTreeInsertRR(t *testing.T) {
 	//  20
 	//   \
 	//   30
-	ass.Nil(testAvlInsert([]int{10, 20, 30}))
+	ass.Nil(testAvlInsert([]interface{}{10, 20, 30}))
 	//   10
 	//   /\
 	//  8  20
@@ -24,7 +25,7 @@ func TestAVLTreeInsertRR(t *testing.T) {
 	//      30
 	//       \
 	//       40
-	ass.Nil(testAvlInsert([]int{10, 8, 20, 30, 40}))
+	ass.Nil(testAvlInsert([]interface{}{10, 8, 20, 30, 40}))
 	//   10
 	//   /\
 	//  8  20
@@ -32,7 +33,7 @@ func TestAVLTreeInsertRR(t *testing.T) {
 	//    15 30
 	//       /
 	//      25
-	ass.Nil(testAvlInsert([]int{10, 8, 20, 15, 30, 25}))
+	ass.Nil(testAvlInsert([]interface{}{10, 8, 20, 15, 30, 25}))
 	//   10
 	//   /\
 	//  8  20
@@ -40,7 +41,7 @@ func TestAVLTreeInsertRR(t *testing.T) {
 	//    15 30
 	//        \
 	//        40
-	ass.Nil(testAvlInsert([]int{10, 8, 20, 15, 30, 40}))
+	ass.Nil(testAvlInsert([]interface{}{10, 8, 20, 15, 30, 40}))
 }
 
 // 插入情况为ll旋转
@@ -51,7 +52,7 @@ func TestAVLTreeInsertLL(t *testing.T) {
 	//   20
 	//   /
 	//  10
-	ass.Nil(testAvlInsert([]int{30, 20, 10}))
+	ass.Nil(testAvlInsert([]interface{}{30, 20, 10}))
 	//        30
 	//        / \
 	//       20 40
@@ -59,7 +60,7 @@ func TestAVLTreeInsertLL(t *testing.T) {
 	//      10
 	//      /
 	//     5
-	ass.Nil(testAvlInsert([]int{30, 20, 40, 10, 5}))
+	ass.Nil(testAvlInsert([]interface{}{30, 20, 40, 10, 5}))
 	//        30
 	//        / \
 	//       20 40
@@ -67,7 +68,7 @@ func TestAVLTreeInsertLL(t *testing.T) {
 	//      10 25
 	//      /
 	//     5
-	ass.Nil(testAvlInsert([]int{30, 20, 40, 10, 25, 5}))
+	ass.Nil(testAvlInsert([]interface{}{30, 20, 40, 10, 25, 5}))
 	//        30
 	//        / \
 	//       20 40
@@ -75,7 +76,7 @@ func TestAVLTreeInsertLL(t *testing.T) {
 	//      10 25
 	//       \
 	//       15
-	ass.Nil(testAvlInsert([]int{30, 20, 40, 10, 25, 15}))
+	ass.Nil(testAvlInsert([]interface{}{30, 20, 40, 10, 25, 15}))
 }
 
 func TestAVLTreeInsertLR(t *testing.T) {
@@ -85,7 +86,7 @@ func TestAVLTreeInsertLR(t *testing.T) {
 	//   40
 	//   /
 	//  35
-	ass.Nil(testAvlInsert([]int{30, 40, 35}))
+	ass.Nil(testAvlInsert([]interface{}{30, 40, 35}))
 	//     30
 	//    / \
 	//   20 40
@@ -93,7 +94,7 @@ func TestAVLTreeInsertLR(t *testing.T) {
 	//    35 50
 	//    /
 	//   32
-	ass.Nil(testAvlInsert([]int{30, 20, 40, 35, 50, 32}))
+	ass.Nil(testAvlInsert([]interface{}{30, 20, 40, 35, 50, 32}))
 	//     30
 	//    / \
 	//   20 40
@@ -101,7 +102,7 @@ func TestAVLTreeInsertLR(t *testing.T) {
 	//    35 50
 	//     \
 	//     36
-	ass.Nil(testAvlInsert([]int{30, 20, 40, 35, 50, 36}))
+	ass.Nil(testAvlInsert([]interface{}{30, 20, 40, 35, 50, 36}))
 }
 
 // 插入情况为rl旋转
@@ -112,7 +113,7 @@ func TestAVLTreeInsertRL(t *testing.T) {
 	//   20
 	//    \
 	//    25
-	ass.Nil(testAvlInsert([]int{30, 20, 25}))
+	ass.Nil(testAvlInsert([]interface{}{30, 20, 25}))
 	//       30
 	//       / \
 	//      20 40
@@ -120,7 +121,7 @@ func TestAVLTreeInsertRL(t *testing.T) {
 	//    10 25
 	//        \
 	//        28
-	ass.Nil(testAvlInsert([]int{30, 20, 40, 10, 25, 18}))
+	ass.Nil(testAvlInsert([]interface{}{30, 20, 40, 10, 25, 18}))
 	//        30
 	//       / \
 	//      20 40
@@ -128,7 +129,7 @@ func TestAVLTreeInsertRL(t *testing.T) {
 	//    10 25
 	//       /
 	//      18
-	ass.Nil(testAvlInsert([]int{30, 20, 40, 10, 25, 15}))
+	ass.Nil(testAvlInsert([]interface{}{30, 20, 40, 10, 25, 15}))
 }
 
 func TestAVLTreeSearch(t *testing.T) {
@@ -138,7 +139,7 @@ func TestAVLTreeSearch(t *testing.T) {
 
 func TestAVLTreeDelete(t *testing.T) {
 
-	v := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	v := []interface{}{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 
 	for i := 0; i < len(v); i++ {
 		avlTree1 := NewAVLTree(CompareBstTreeInt, v...)
@@ -151,7 +152,7 @@ func TestAVLTreeDelete(t *testing.T) {
 }
 
 // 测试插入的数据
-func testAvlInsert(values []int) error {
+func testAvlInsert(values []interface{}) error {
 	// 先找出最大值列表的最大值
 	tree := NewAVLTree(CompareBstTreeInt, values...)
 	return testCheckAvl(tree)

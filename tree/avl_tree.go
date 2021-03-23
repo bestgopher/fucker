@@ -36,7 +36,7 @@ type AVLTree struct {
 	compare fucker.CompareFunc
 }
 
-func NewAVLTree(compare fucker.CompareFunc, values ...int) *AVLTree {
+func NewAVLTree(compare fucker.CompareFunc, values ...interface{}) *AVLTree {
 	tree := &AVLTree{compare: compare}
 
 	for _, v := range values {
