@@ -331,7 +331,7 @@ LL旋转
         p                p
         |                |
         x                y
-	   / \        -->   / \
+       / \        -->   / \
       lx  y            x   ry
          / \          / \
         ly ry        lx  ly
@@ -372,7 +372,7 @@ func (r *RedBlackTree) leftRotate(x *redBlackTreeNode) {
         p                p
         |                |
         y                x
-	   / \        -->   / \
+       / \        -->   / \
       x  ry            x   y
      / \                  / \
     lx rx                lx  ry
