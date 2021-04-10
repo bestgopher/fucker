@@ -75,12 +75,11 @@ func prefixTable(needle string) []int {
 			// 否则，prefixTable[i] = prefixTable[j] + 1
 			for j > 0 {
 				j = prefixTable[j-1]
+				// 如果匹配成功，则前缀为prefixTable[j] + 1
 				if needle[i] == needle[j] {
 					prefixTable[i] = prefixTable[j] + 1
 					j++
 					break
-				} else {
-					prefixTable[i] = 0
 				}
 			}
 		}
