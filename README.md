@@ -39,3 +39,6 @@
 -  [二叉查找树(Binary Search Tree，BST树)](https://github.com/bestgopher/fucker/blob/master/tree/binary_search_tree.go)
 -  [二叉平衡查找树(AVL Tree)](https://github.com/bestgopher/fucker/blob/master/tree/avl_tree.go)
 -  [红黑树(Red-Black Tree)](https://github.com/bestgopher/fucker/blob/master/tree/red_black_tree.go)
+
+### 字符串查找算法(strs)
+-  [KMP算法](https://github.com/bestgopher/fucker/blob/master/strs/kmp.go)
