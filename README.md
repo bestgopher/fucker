@@ -42,3 +42,8 @@
 
 ### 字符串查找算法(strs)
 -  [KMP算法](https://github.com/bestgopher/fucker/blob/master/strs/kmp.go)
+
+### 缓存(cache)
+
+- [最近最少使用(LRU)](https://github.com/bestgopher/fucker/blob/master/cache/lru.go)
+
