@@ -45,6 +45,7 @@ func (l *lruCache) Get(key interface{}) (interface{}, bool) {
 		return nil, false
 	}
 
+	l.changeTTL(node)
 	// 最后返回元素
 	return node.value, true
 }

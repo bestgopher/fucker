@@ -33,6 +33,14 @@ func TestLruCache_Get(t *testing.T) {
 	l.Set(21, 21)
 	_, ok = l.Get(2)
 	assert.Equal(t, false, ok)
+
+	l.Get(3)
+	l.Set(22, 22)
+	_, ok = l.Get(3)
+	assert.Equal(t, true, ok)
+
+	_, ok = l.Get(4)
+	assert.Equal(t, false, ok)
 }
 
 func TestLruCache_Delete(t *testing.T) {
