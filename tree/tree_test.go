@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"gopkg.in/bestgopher/fucker"
+	fucker "gopkg.in/bestgopher/fucker/v1"
 )
 
 func CompareBstTreeInt(a interface{}, b interface{}) fucker.Compare {

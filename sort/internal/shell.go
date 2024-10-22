@@ -3,7 +3,7 @@ package internal
 import (
 	"math"
 
-	"gopkg.in/bestgopher/fucker"
+	fucker "gopkg.in/bestgopher/fucker/v1"
 )
 
 /*

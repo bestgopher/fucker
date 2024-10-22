@@ -1,7 +1,7 @@
 package tree
 
 import (
-	"gopkg.in/bestgopher/fucker"
+	fucker "gopkg.in/bestgopher/fucker/v1"
 )
 
 // 红黑树的颜色
