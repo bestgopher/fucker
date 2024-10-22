@@ -1,7 +1,7 @@
 package tree
 
 import (
-	"github.com/bestgopher/fucker"
+	"gopkg.in/bestgopher/fucker"
 )
 
 // BST节点

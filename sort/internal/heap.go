@@ -1,19 +1,24 @@
 package internal
 
 import (
-	"github.com/bestgopher/fucker"
+	"gopkg.in/bestgopher/fucker"
 )
 
 /*
 堆排序
+
 	可以认为是选择排序的一种优化
+
 步骤:
+
 	1.对序列进行原地建堆(heapify)，构建出大顶堆
 	2.重复执行以下操作，直到堆的元素数量为1
 		1.交换堆顶元素和尾元素，此时序列的最大元素就在尾部了
 		2.把尾部元素排除再外，也就是堆的元素减1
 		3.堆0位置进行1次downHeap操作。
+
 时间复杂度:
+
 	步骤2的执行n-1次，2.3执行logn，因此时间复杂度是O(nlogn)
 */
 func HeapSort(s []interface{}, f fucker.CompareFunc) {

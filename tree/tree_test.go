@@ -3,8 +3,8 @@ package tree
 import (
 	"testing"
 
-	"github.com/bestgopher/fucker"
 	"github.com/stretchr/testify/assert"
+	"gopkg.in/bestgopher/fucker"
 )
 
 func CompareBstTreeInt(a interface{}, b interface{}) fucker.Compare {

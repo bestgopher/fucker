@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bestgopher/fucker"
+	"gopkg.in/bestgopher/fucker"
 )
 
 type sort struct{}

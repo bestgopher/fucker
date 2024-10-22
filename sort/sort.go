@@ -1,7 +1,7 @@
 package sort
 
 import (
-	"github.com/bestgopher/fucker/sort/internal"
+	"gopkg.in/bestgopher/fucker/sort/internal"
 )
 
 var (

@@ -1,7 +1,7 @@
 package tree
 
 import (
-	"github.com/bestgopher/fucker"
+	"gopkg.in/bestgopher/fucker"
 )
 
 // 平衡二叉搜索树的节点
@@ -17,6 +17,7 @@ func (a *avlTreeNode) Value() interface{} { return a.value }
 
 /*
 平衡二叉查找树
+
 	树的高度：一片叶子的位置高度为1，null孩子的高度为0
 	高度平衡属性：对于T中每一个位置p，p的孩子的高度最多相差1。满足高度平衡属性的二叉搜索树被称为AVL树。AVL树的子树也是一颗AVL树。
 
@@ -24,6 +25,7 @@ func (a *avlTreeNode) Value() interface{} { return a.value }
 	删除和插入的方式和二叉搜索树一致。
 
 插入
+
 	插入一个节点，会在叶子节点p的位置上产生一个新的节点。这个操作可能违反了高度平衡属性。且唯一可能变得不平衡的位置是p的祖先。
 	对于节点A，四种方式插入会破坏A的平衡性
 	LL：在A的左子树根节点的左子树上插入节点
