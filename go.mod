@@ -1,4 +1,4 @@
-module gopkg.in/bestgopher/fucker/v1
+module gopkg.in/bestgopher/fucker.v1
 
 go 1.14
 

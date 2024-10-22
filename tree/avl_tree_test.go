@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	fucker "gopkg.in/bestgopher/fucker/v1"
+	fucker "gopkg.in/bestgopher/fucker.v1"
 )
 
 // 插入情况为rr旋转

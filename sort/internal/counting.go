@@ -1,7 +1,7 @@
 package internal
 
 import (
-	fucker "gopkg.in/bestgopher/fucker/v1"
+	fucker "gopkg.in/bestgopher/fucker.v1"
 )
 
 // 简单实现，
